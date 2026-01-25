@@ -1,26 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tropikal&display=swap');
 @import "tailwindcss";
+/* Tropikal n’est pas sur Google Fonts, ajoute-le via @font-face si nécessaire */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-title: 'Tropikal', cursive;
+  --font-subtitle: 'Great Vibes', cursive;
+
+  --color-background: #eae1de;
+  --color-title: #c08562;
+  --color-subtitle: #693b20;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-subtitle);
+  background-color: var(--color-background);
+
+  /* background image */
+  background-size: cover;       /* couvre tout l’écran */
+  background-position: center;  /* centré */
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
+
+h1, h2, h3 {
+  font-family: var(--font-title);
+  margin: 0;
+}
+
+section {
+  margin: 0;        /* supprime tout espace externe */
+  padding: 0;       /* supprime tout espace interne */
+  width: 100%;
+  height: 100vh;    /* chaque section prend exactement la hauteur de l’écran */
+}
+
+header nav a {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-subtitle);
+  font-family: var(--font-subtitle);
+  padding-bottom: 4px;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-title);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+header nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
