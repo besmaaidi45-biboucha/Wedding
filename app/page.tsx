@@ -45,6 +45,7 @@ export default function Home() {
             key={section.id}
             section={{ ...section, src }}
             fallbackSrc={`${basePath}/desktop/${section.name}`}
+            isMobile={isMobile}
           />
         );
       })}
@@ -57,9 +58,11 @@ export default function Home() {
 function FullSection({
   section,
   fallbackSrc,
+  isMobile,
 }: {
   section: Section & { src: string };
   fallbackSrc: string;
+  isMobile: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -76,8 +79,11 @@ function FullSection({
         position: "relative",
         width: "100%",
         height: section.type === "video" ? "100vh" : "auto",
-        aspectRatio: section.type === "image"
-          ? (window.innerWidth <= 768 ? " 4 / 5" : "16 / 9")
+        aspectRatio: 
+            section.type === "image"
+	  ? isMobile 
+            ? " 4 / 5" 
+            : "16 / 9"
           : undefined,
         margin: 0,
         padding: 0,
