@@ -1,47 +1,73 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Section = {
   id: string;
   type: "image" | "video";
-  src: string;
+  name: string; // nom du fichier sans dossier
 };
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+
+    const update = () => setIsMobile(media.matches);
+    update();
+
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   const sections: Section[] = [
-    { id: "accueil", type: "video", src: "/videos/12.mp4" },
-    { id: "page_2", type: "image", src: "/images/2.png" },
-    { id: "page_3", type: "image", src: "/images/page_3.png" },
-    { id: "page_4", type: "image", src: "/images/page_4.png" },
-    { id: "page_6", type: "video", src: "/videos/3.mp4" },
-    { id: "page_5", type: "image", src: "/images/page_5.png" },
+    { id: "accueil", type: "video", name: "12.mp4" },
+    { id: "page_2", type: "image", name: "11.svg" },
+    { id: "page_3", type: "image", name: "12.svg" },
+    { id: "page_4", type: "image", name: "13.svg" },
+    { id: "page_6", type: "video", name: "3.mp4" },
+    { id: "page_5", type: "image", name: "6.png" },
   ];
 
   return (
     <main style={{ margin: 0, padding: 0 }}>
-      {sections.map((section) => (
-        <FullSection key={section.id} section={section} />
-      ))}
+      {sections.map((section) => {
+        const basePath =
+          section.type === "image" ? "/images" : "/videos";
+
+        const src = isMobile
+          ? `${basePath}/mobile/${section.name}`
+          : `${basePath}/desktop/${section.name}`;
+
+        return (
+          <FullSection
+            key={section.id}
+            section={{ ...section, src }}
+            fallbackSrc={`${basePath}/desktop/${section.name}`}
+          />
+        );
+      })}
     </main>
   );
 }
 
 /* ============================= */
 
-function FullSection({ section }: { section: Section }) {
+function FullSection({
+  section,
+  fallbackSrc,
+}: {
+  section: Section & { src: string };
+  fallbackSrc: string;
+}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current
-        .play()
-        .catch(() => {
-          // IMPORTANT : on ignore volontairement l’erreur autoplay
-          // pour éviter le crash Next.js
-        });
+    if (section.type === "video" && videoRef.current) {
+      videoRef.current.play().catch(() => {});
     }
-  }, []);
+  }, [section.src, section.type]);
 
   return (
     <section
@@ -59,16 +85,10 @@ function FullSection({ section }: { section: Section }) {
       {/* IMAGE */}
       {section.type === "image" && (
         <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `url(${section.src})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            zIndex: -1,
-          }}
-        />
+  className="hero-bg"
+  style={{ backgroundImage: `url(${section.src})` }}
+/>
+
       )}
 
       {/* VIDEO */}
@@ -79,6 +99,10 @@ function FullSection({ section }: { section: Section }) {
           loop
           playsInline
           preload="metadata"
+          onError={(e) => {
+            // fallback si la vidéo mobile n’existe pas
+            (e.currentTarget as HTMLVideoElement).src = fallbackSrc;
+          }}
           style={{
             position: "absolute",
             inset: 0,

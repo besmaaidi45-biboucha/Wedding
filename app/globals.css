@@ -71,3 +71,47 @@ header nav a:hover::after {
 }
 
 
+@media (max-width: 480px) {
+  video {
+    object-fit: cover;
+  }
+  body {
+    object-fit: cover;
+    height: auto;
+  }
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: -1;
+}
+
+/* Laptop */
+@media (max-width: 1280px) {
+  .hero-bg {
+    background-size: contain;
+  }
+}
+
+/* Tablette */
+@media (max-width: 1024px) {
+  .hero-bg {
+    background-size: contain;
+    background-color: #eae1de;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-bg {
+    background-size: contain;
+    background-position: center;
+    background-color: #eae1de;
+  }
+}
+
+
