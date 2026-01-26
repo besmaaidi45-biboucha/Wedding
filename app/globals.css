@@ -41,8 +41,9 @@ section {
   margin: 0;        /* supprime tout espace externe */
   padding: 0;       /* supprime tout espace interne */
   width: 100%;
-  height: 100vh;    /* chaque section prend exactement la hauteur de l’écran */
-}
+  height: auto;
+  min-height: auto;
+ }
 
 header nav a {
   position: relative;
@@ -93,7 +94,7 @@ header nav a:hover::after {
 /* Laptop */
 @media (max-width: 1280px) {
   .hero-bg {
-    background-size: contain;
+    background-size: 110%;
   }
 }
 
@@ -107,7 +108,12 @@ header nav a:hover::after {
 
 /* Mobile */
 @media (max-width: 768px) {
+  section {
+   min-height: auto;
+   height: auto;
+ }
   .hero-bg {
+    aspect-ratio: 4 / 5;
     background-size: contain;
     background-position: center;
     background-color: #eae1de;

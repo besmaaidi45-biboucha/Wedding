@@ -75,7 +75,10 @@ function FullSection({
       style={{
         position: "relative",
         width: "100%",
-        height: "100vh",
+        height: section.type === "video" ? "100vh" : "auto",
+        aspectRatio: section.type === "image"
+          ? (window.innerWidth <= 768 ? " 4 / 5" : "16 / 9")
+          : undefined,
         margin: 0,
         padding: 0,
         overflow: "hidden",
