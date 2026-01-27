@@ -22,12 +22,12 @@ export default function Home() {
   }, []);
 
   const sections: Section[] = [
-    { id: "accueil", type: "video", name: "12.mp4" },
-    { id: "page_2", type: "image", name: "11.svg" },
-    { id: "page_3", type: "image", name: "12.svg" },
-    { id: "page_4", type: "image", name: "13.svg" },
-    { id: "page_6", type: "video", name: "3.mp4" },
-    { id: "page_5", type: "image", name: "6.png" },
+    { id: "accueil", type: "video", name: "1.mp4" },
+    { id: "page_2", type: "image", name: "2.svg" },
+    { id: "page_3", type: "image", name: "3.svg" },
+    { id: "page_4", type: "video", name: "4.mp4" },
+    { id: "page_5", type: "image", name: "5.svg" },
+    { id: "page_6", type: "image", name: "6.svg" },
   ];
 
   return (
@@ -103,13 +103,14 @@ function FullSection({
       {/* VIDEO */}
       {section.type === "video" && (
         <video
+           key={section.src} // 🔥 OBLIGATOIRE
           ref={videoRef}
           muted
           loop
           playsInline
           preload="metadata"
           onError={(e) => {
-            // fallback si la vidéo mobile n’existe pas
+            console.log("VIDEO ERROR, fallback");
             (e.currentTarget as HTMLVideoElement).src = fallbackSrc;
           }}
           style={{
@@ -117,7 +118,10 @@ function FullSection({
             inset: 0,
             width: "100%",
             height: "100%",
-            objectFit: "cover",
+            objectFit:
+               section.name === "1.mp4" 
+               ? "contain"
+               : "cover",
             zIndex: -1,
           }}
         >
