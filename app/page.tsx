@@ -33,7 +33,7 @@ export default function Home() {
     { id: "page_9", type: "image", name: "9.png" },
     { id: "page_10", type: "image", name: "10.png" },
     { id: "page_11", type: "video", name: "5.mp4" },
-    { id: "page_11", type: "video", name: "6.mp4" },
+    { id: "page_12", type: "video", name: "6.mp4" },
   ];
 
   return (
