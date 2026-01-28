@@ -28,6 +28,11 @@ export default function Home() {
     { id: "page_4", type: "video", name: "4.mp4" },
     { id: "page_5", type: "image", name: "5.svg" },
     { id: "page_6", type: "image", name: "6.svg" },
+    { id: "page_7", type: "image", name: "7.png" },
+    { id: "page_8", type: "image", name: "8.png" },
+    { id: "page_9", type: "image", name: "9.png" },
+    { id: "page_10", type: "image", name: "10.png" },
+    { id: "page_11", type: "video", name: "5.mp4" },
   ];
 
   return (
